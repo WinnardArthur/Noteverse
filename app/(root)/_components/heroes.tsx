@@ -1,10 +1,8 @@
 "use client";
 
 import React from "react";
-import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 
-import { Button } from "@/components/ui/button";
 
 export const Heroes = () => {
   return (

@@ -1,9 +1,10 @@
 "use client";
 
-import React, { ElementRef, useRef, useState } from "react";
+import React, { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { ChevronLeft, MenuIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
+
 import { cn } from "@/lib/utils";
 
 export const Navigation = () => {
@@ -15,6 +16,23 @@ export const Navigation = () => {
   const navbarRef = useRef<ElementRef<"div">>(null);
   const [isResetting, setIsResetting] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
+
+  // Hide/Show sidebar automatically depending on screen size
+  // Whether mobile / larger screens
+  useEffect(() => {
+    if (isMobile) {
+      collapse();
+    } else {
+      resetWidth();
+    }
+  }, [isMobile]);
+
+  // On mobile, close sidebar when a link in the sidebar is clicked
+  useEffect(() => {
+    if (isMobile) {
+      collapse();
+    }
+  }, [pathname, isMobile]);
 
   //   On handle mouse down
   const handleMouseDown = (

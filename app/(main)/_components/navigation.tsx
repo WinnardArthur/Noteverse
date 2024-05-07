@@ -8,10 +8,14 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 import { UserItem } from "./user-item";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 export const Navigation = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const pathname = usePathname();
+
+  const documents = useQuery(api.documents.get);
 
   const isResizingRef = useRef(false);
   const sidebarRef = useRef<ElementRef<"aside">>(null);
@@ -111,7 +115,7 @@ export const Navigation = () => {
       <aside
         ref={sidebarRef}
         className={cn(
-          "group/sidebar h-full bg-secondary overflow-y-auto relative flex w-60 z-[99999]",
+          "group/sidebar h-full bg-secondary overflow-y-auto relative flex flex-col w-60 z-[99999]",
           isResetting && "transition-all ease-in-out duration-300",
           isMobile && "w-0"
         )}
@@ -128,6 +132,11 @@ export const Navigation = () => {
         </div>
         <div className="w-full">
           <UserItem />
+        </div>
+        <div className="mt-4">
+          {documents?.map((document) => {
+            return <p key={document._id}>{document.title}</p>;
+          })}
         </div>
 
         <div

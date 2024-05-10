@@ -12,7 +12,7 @@ import {
   Trash,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { useQuery, useMutation } from "convex/react";
+import { useMutation } from "convex/react";
 import { toast } from "sonner";
 
 import { cn } from "@/lib/utils";
@@ -27,9 +27,11 @@ import { UserItem } from "./user-item";
 import { Item } from "./item";
 import { DocumentList } from "./document-list";
 import { TrashBox } from "./trash-box";
+import { useSearch } from "@/hooks/use-search";
 
 export const Navigation = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const search = useSearch();
   const pathname = usePathname();
 
   const create = useMutation(api.documents.create);
@@ -159,7 +161,12 @@ export const Navigation = () => {
         </div>
         <div className="w-full">
           <UserItem />
-          <Item label="Search" icon={Search} isSearch onClick={() => {}} />
+          <Item
+            label="Search"
+            icon={Search}
+            isSearch
+            onClick={() => search.onOpen()}
+          />
           <Item label="Settings" icon={Settings} onClick={() => {}} />
           <Item label="New page" onClick={handleCreate} icon={PlusCircle} />
         </div>

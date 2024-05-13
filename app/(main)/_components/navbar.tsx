@@ -29,7 +29,7 @@ export const Navbar = ({ isCollapsed, onResetWidth }: NavbarProps) => {
         <Title.Skeleton />
         <div className="flex items-center gap-x-2">
           <Menu.Skeleton />
-        </div>
+        </div>  
       </nav>
     );
   }

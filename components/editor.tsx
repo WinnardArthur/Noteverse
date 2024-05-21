@@ -15,7 +15,7 @@ interface EditorProps {
   editable?: boolean;
 }
 
-export const Editor = ({ onChange, initialContent, editable }: EditorProps) => {
+const Editor = ({ onChange, initialContent, editable }: EditorProps) => {
   const { edgestore } = useEdgeStore();
   const { resolvedTheme } = useTheme();
 
@@ -35,7 +35,7 @@ export const Editor = ({ onChange, initialContent, editable }: EditorProps) => {
   return (
     <BlockNoteView
       editor={editor}
-      editable
+      editable={editable}
       theme={resolvedTheme === "dark" ? "dark" : "light"}
       onChange={() => {
         onChange(JSON.stringify(editor.document));
@@ -43,3 +43,5 @@ export const Editor = ({ onChange, initialContent, editable }: EditorProps) => {
     />
   );
 };
+
+export default Editor;

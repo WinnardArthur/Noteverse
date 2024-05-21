@@ -11,7 +11,7 @@ import {
   Settings,
   Trash,
 } from "lucide-react";
-import { useParams, usePathname } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { useMutation } from "convex/react";
 import { toast } from "sonner";
 
@@ -36,7 +36,9 @@ export const Navigation = () => {
   const pathname = usePathname();
   const search = useSearch();
   const settings = useSettingsStore();
+
   const params = useParams();
+  const router = useRouter();
 
   const create = useMutation(api.documents.create);
 
@@ -133,8 +135,11 @@ export const Navigation = () => {
     }
   };
 
+  // Create a new document
   const handleCreate = () => {
-    const promise = create({ title: "Untitled" });
+    const promise = create({ title: "Untitled" }).then((documentId) =>
+      router.push(`/documents/${documentId}`)
+    );
 
     toast.promise(promise, {
       loading: "Creating a new note...",

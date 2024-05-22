@@ -240,8 +240,6 @@ export const getSearch = query({
 export const getById = query({
   args: { documentId: v.id("documents") },
   handler: async (ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity();
-
     const document = await ctx.db.get(args.documentId);
 
     if (!document) {
@@ -252,6 +250,8 @@ export const getById = query({
     if (document.isPublished && !document.isArchived) {
       return document;
     }
+
+    const identity = await ctx.auth.getUserIdentity();
 
     // If document is not published,
     // Then user is viewing their own document
